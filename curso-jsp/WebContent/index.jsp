@@ -14,33 +14,6 @@
 <c:out value="${'Bem vindo ao JSTL'}"></c:out>
 
 <p/>
-
-<!-- Condicional(IF,ELSE) usando JTLS -->
-
-<c:set var="numero" value="${100/2}"></c:set>
-<c:choose>
-	<c:when test="${numero > 50}">
-		<c:out value="${'Maior que 50'}"></c:out>
-	</c:when>
-	
-	<c:when test="${numero < 50}">
-		<c:out value="${'Menor que 50'}"></c:out>
-	</c:when>
-	
-	<c:otherwise>
-		<c:out value="${'Não encontrou valor correto'}"></c:out>
-	</c:otherwise>
-</c:choose>
-<br>
-<!-- FOR usando JTLS -->
-
-<c:forEach var="n" begin="1" end="${numero}">
-	Item : ${n}
-</c:forEach>
-
-<p/>
-<p/>
-<p/>
 <p/>
 
 
