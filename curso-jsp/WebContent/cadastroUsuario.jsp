@@ -32,7 +32,7 @@
 				<td style="width: 75px"><c:out value="${user.login}"></c:out></td>
 				<td><c:out value="${user.senha}"></c:out></td>
 				
-				<td><a href="salvarUsuario?acao=delete&user=${user.login}}">Excluir</a></td>
+				<td><a href="salvarUsuario?acao=delete&user=${user.login}">Excluir</a></td>
 			</tr>
 		</c:forEach>
 	</table>

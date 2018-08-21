@@ -21,16 +21,24 @@ public class Usuario extends HttpServlet {
 
     public Usuario() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String acao = request.getParameter("acao");
-		String user = request.getParameter("user");
-		
-		System.out.println("acao");
+		try{
+			String acao = request.getParameter("acao");
+			String user = request.getParameter("user");
+			
+			if(acao.equalsIgnoreCase("delete")){
+				daoUsuario.delete(user);
+				RequestDispatcher view = request.getRequestDispatcher("/cadastroUsuario.jsp");
+				request.setAttribute("usuarios", daoUsuario.listar());
+				view.forward(request, response);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 
 
