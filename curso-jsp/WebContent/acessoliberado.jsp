@@ -8,5 +8,9 @@
 </head>
 <body>
 	<h2>Acesso liberado ao sistema</h2>
+	
+	<a href="cadastroUsuario.jsp">Cadastro de Usuários</a>
+	
+	
 </body>
 </html>
