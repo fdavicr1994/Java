@@ -35,7 +35,6 @@ public class DaoUsuario {
 			try {
 				connection.rollback();
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
@@ -52,6 +51,7 @@ public class DaoUsuario {
 		while(resultSet.next()){
 			
 			Bean bean = new Bean();
+			bean.setId(resultSet.getLong("id"));
 			bean.setLogin(resultSet.getString("login"));
 			bean.setSenha(resultSet.getString("senha"));
 			
@@ -69,6 +69,43 @@ public class DaoUsuario {
 		
 			connection.commit();
 		}catch(Exception e){
+			e.printStackTrace();
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		}
+	}
+
+	public Bean consultar(String login) throws Exception{
+		String sql = "select * from usuario where login = '"+login+"'";
+		
+		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+		ResultSet resultSet = preparedStatement.executeQuery();
+		if(resultSet.next()){
+			Bean bean = new Bean();
+			bean.setId(resultSet.getLong("id"));
+			bean.setLogin(resultSet.getString("login"));
+			bean.setSenha(resultSet.getString("senha"));
+			
+			return bean;
+		}
+		return null;
+	}
+
+	public void atualizar(Bean usuario){
+		
+		try {
+			String sql = "update usuario set login = ?, senha = ? where id = " + usuario.getId();
+			
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setString(1, usuario.getLogin());
+			preparedStatement.setString(2, usuario.getSenha());
+			preparedStatement.executeUpdate();
+			connection.commit();
+			
+		}catch(SQLException e) {
 			e.printStackTrace();
 			try {
 				connection.rollback();

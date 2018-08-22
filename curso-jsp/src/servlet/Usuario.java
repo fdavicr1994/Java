@@ -36,6 +36,14 @@ public class Usuario extends HttpServlet {
 				request.setAttribute("usuarios", daoUsuario.listar());
 				view.forward(request, response);
 			}
+			else if(acao.equalsIgnoreCase("editar")){
+				Bean bean = daoUsuario.consultar(user);
+				
+				//daoUsuario.atualizar(user);;
+				RequestDispatcher view = request.getRequestDispatcher("/cadastroUsuario.jsp");
+				request.setAttribute("user", bean);
+				view.forward(request, response);
+			}
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -44,15 +52,22 @@ public class Usuario extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		String id = request.getParameter("id");
 		String login = request.getParameter("login");
 		String senha = request.getParameter("senha");
 		
 		Bean usuario = new Bean();
 		
+		usuario.setId(!id.isEmpty()? Long.parseLong(id) : 0);
 		usuario.setLogin(login);
 		usuario.setSenha(senha);
 		
-		daoUsuario.Salvar(usuario);
+		if(id == null || id.isEmpty()){
+			daoUsuario.Salvar(usuario);
+		}
+		else{
+			daoUsuario.atualizar(usuario);
+		}
 		
 		try{
 			RequestDispatcher view = request.getRequestDispatcher("/cadastroUsuario.jsp");

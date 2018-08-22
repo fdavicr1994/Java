@@ -1,8 +1,9 @@
 package beans;
 
 public class Bean {
-	private String login;
 	
+	private Long id;
+	private String login;
 	private String senha;
 
 //	public boolean validarLoginSenha(String login, String senha){
@@ -12,6 +13,14 @@ public class Bean {
 //			return false;
 //		}
 //	}
+	
+	public Long getId(){
+		return id;
+	}
+	
+	public void setId(Long id){
+		this.id = id;
+	}
 	
 	public String getLogin() {
 		return login;
