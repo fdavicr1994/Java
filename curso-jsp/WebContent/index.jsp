@@ -7,26 +7,27 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<link rel="stylesheet" href="resources/css/style.css">
 	<title>Login - Servlet</title>
 </head>
 <body>
 
-<c:out value="${'Bem vindo ao JSTL'}"></c:out>
-
-<p/>
 <p/>
 
 
-	<h1>Curso de JSP - Teste de Login</h1>
-	
-	<form action="LoginServlet" method="post">
-		Login:
-		<input type='text' id='login' name='login'>
-		<br>
-		Senha:
-		<input type="password" id='senha' name='senha'>
-		<br>
-		<input type='submit' value='Enviar'>
-	</form>
+	<div class="login-page">
+		<h1>Curso de JSP - Login</h1>
+		<div class="form">	
+			<form action="LoginServlet" method="post" class="login-form">
+				Login:
+				<input type='text' id='login' name='login'>
+				<br>
+				Senha:
+				<input type="password" id='senha' name='senha'>
+				<br>
+				<button type='submit' value='Enviar'>Login</button>
+			</form>
+		</div>
+	</div>	
 </body>
 </html>

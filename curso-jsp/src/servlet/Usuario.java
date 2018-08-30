@@ -44,6 +44,11 @@ public class Usuario extends HttpServlet {
 				request.setAttribute("user", bean);
 				view.forward(request, response);
 			}
+			else if(acao.equalsIgnoreCase("listartodos")){
+				RequestDispatcher view = request.getRequestDispatcher("/cadastroUsuario.jsp");
+				request.setAttribute("usuarios", daoUsuario.listar());
+				view.forward(request, response);
+			}
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -52,30 +57,50 @@ public class Usuario extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		String acao = request.getParameter("acao");
+		if(acao != null && acao.equalsIgnoreCase("reset")){
+			try{
+				RequestDispatcher view = request.getRequestDispatcher("/cadastroUsuario.jsp");
+				request.setAttribute("usuarios", daoUsuario.listar());
+				view.forward(request, response);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}else{
+		
 		String id = request.getParameter("id");
 		String login = request.getParameter("login");
 		String senha = request.getParameter("senha");
+		String nome = request.getParameter("nome");
+		String telefone = request.getParameter("telefone");
 		
 		Bean usuario = new Bean();
 		
 		usuario.setId(!id.isEmpty()? Long.parseLong(id) : 0);
 		usuario.setLogin(login);
 		usuario.setSenha(senha);
-		
-		if(id == null || id.isEmpty()){
-			daoUsuario.Salvar(usuario);
-		}
-		else{
-			daoUsuario.atualizar(usuario);
-		}
+		usuario.setNome(nome);
+		usuario.setTelefone(telefone);
 		
 		try{
+			if(id == null || id.isEmpty() && !daoUsuario.validarLogin(login)){
+				request.setAttribute("msg", "Usuário já existe, favor utilize outro!");
+				request.setAttribute("user", usuario);
+			}
+			
+			if(id == null || id.isEmpty() && daoUsuario.validarLogin(login)){
+				daoUsuario.Salvar(usuario);
+			}
+			else if(id != null && !id.isEmpty()){
+				daoUsuario.atualizar(usuario);
+			}
+	
 			RequestDispatcher view = request.getRequestDispatcher("/cadastroUsuario.jsp");
 			request.setAttribute("usuarios", daoUsuario.listar());
 			view.forward(request, response);
 		}catch(Exception e){
 			e.printStackTrace();
+			}
 		}
 	}
-
 }

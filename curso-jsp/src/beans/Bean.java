@@ -5,6 +5,8 @@ public class Bean {
 	private Long id;
 	private String login;
 	private String senha;
+	private String nome;
+	private String telefone;
 
 //	public boolean validarLoginSenha(String login, String senha){
 //		if(login.equalsIgnoreCase("admin") && senha.equalsIgnoreCase("admin")){
@@ -14,6 +16,22 @@ public class Bean {
 //		}
 //	}
 	
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
+	
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
 	public Long getId(){
 		return id;
 	}
