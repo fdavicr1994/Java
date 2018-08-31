@@ -9,7 +9,8 @@
 <body>
 	<h2>Acesso liberado ao sistema</h2>
 	
-	<a href="salvarUsuario?acao=listartodos"><img src="resources/img/user.png" alt="Cadastro de usuário" title="CadastroUsuario"></a>
+	<a href="salvarUsuario?acao=listartodos"><img src="resources/img/user.png" alt="Cadastro de usuário" title="CadastroUsuario" width="60px" height="60px"></a>
+	<a href="cadastroProduto.jsp"><img src="resources/img/prod.png" alt="Cadastro de produto" title="CadastroProduto" width="60px" height="60px"></a>
 	
 </body>
 </html>

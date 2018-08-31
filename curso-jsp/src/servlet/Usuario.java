@@ -76,25 +76,52 @@ public class Usuario extends HttpServlet {
 		
 		Bean usuario = new Bean();
 		
-		usuario.setId(!id.isEmpty()? Long.parseLong(id) : 0);
+		usuario.setId(!id.isEmpty()? Long.parseLong(id) : null);
 		usuario.setLogin(login);
 		usuario.setSenha(senha);
 		usuario.setNome(nome);
 		usuario.setTelefone(telefone);
 		
-		try{
-			if(id == null || id.isEmpty() && !daoUsuario.validarLogin(login)){
-				request.setAttribute("msg", "Usuário já existe, favor utilize outro!");
-				request.setAttribute("user", usuario);
-			}
+		try {
+
+			String msg = null;
+			boolean podeInserir = true;
+
+			if (login == null || login.isEmpty()){
+				msg = "Login deve ser informado obrigatoriamente";
+				podeInserir = false;
+			}else if (senha == null || senha.isEmpty()){
+				msg = "Senha deve ser informada obrigatoriamente";
+				podeInserir = false;
+			}else if (nome == null || nome.isEmpty()){
+				msg = "Nome deve ser informado obrigatoriamente";
+				podeInserir = false;
+			}else if (telefone == null || telefone.isEmpty()){
+				msg = "Telefone deve ser informado obrigatoriamente";
+				podeInserir = false;}
 			
-			if(id == null || id.isEmpty() && daoUsuario.validarLogin(login)){
-				daoUsuario.Salvar(usuario);
+			else if (id == null || id.isEmpty()
+					&& !daoUsuario.validarLogin(login)) {//QUANDO DOR USUÁRIO NOVO
+				msg = "Usuário já existe com o mesmo login!";
+				podeInserir = false;
+			} 
+			
+			if (msg != null) {
+				request.setAttribute("msg", msg);
 			}
-			else if(id != null && !id.isEmpty()){
+
+			else if (id == null || id.isEmpty() && daoUsuario.validarLogin(login) && podeInserir) {
+
+				daoUsuario.Salvar(usuario);
+
+			} else if (id != null && !id.isEmpty() && podeInserir) {
 				daoUsuario.atualizar(usuario);
 			}
-	
+			
+			if (!podeInserir){
+				request.setAttribute("user", usuario);
+			}
+
 			RequestDispatcher view = request.getRequestDispatcher("/cadastroUsuario.jsp");
 			request.setAttribute("usuarios", daoUsuario.listar());
 			view.forward(request, response);
